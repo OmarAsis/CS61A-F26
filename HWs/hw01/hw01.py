@@ -16,12 +16,12 @@ def a_plus_abs_b(a, b):
     3
     """
     if b < 0:
-        f = a-b
+        f = sub
     else:
-        f = a+b
+        f = add
     return f(a, b)
 
-
+###REVIEW
 def two_of_three(i, j, k):
     """Return m*m + n*n, where m and n are the two smallest members of the
     positive numbers i, j, and k.
@@ -35,10 +35,7 @@ def two_of_three(i, j, k):
     >>> two_of_three(5, 5, 5)
     50
     """
-    num=sorted([i,j,k])
-    n=sorted[0]
-    m=sorted[1]
-    return m*m + n*n
+    return sum(x * x for x in sorted([i, j, k])[:2])
 
 ###REVIEW
 def largest_factor(n):
@@ -75,16 +72,16 @@ def hailstone(n):
     >>> b
     1
     """
-    while True:
-        if n==1:
-            print(n)
-            return n
-        elif n % 2==0:
+    length=1
+    print(n)
+    while n!=1:
+        if n % 2==0:
             n=n//2
-            print(n)
         else:
             n=(n*3)+1
-            print(n)
+        print(n)
+        length+=1
+    return length
 
         
 
