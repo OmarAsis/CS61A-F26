@@ -1,6 +1,6 @@
 """Lab 1: Functions & Control."""
 
-
+##R
 def pick_digit(n, k):
     """Return the k-th digit from the right of n.
 
@@ -11,7 +11,7 @@ def pick_digit(n, k):
     >>> pick_digit(3579, 10)
     0
     """
-    return ____
+    return(n//pow(10,k)) % 10
 
 
 def middle(a, b, c):
@@ -27,7 +27,7 @@ def middle(a, b, c):
     >>> middle(30, 5, 40)
     30
     """
-    return ____
+    return sorted([a,b,c])[1]
 
 
 def falling(n, k):
