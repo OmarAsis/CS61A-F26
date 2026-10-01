@@ -1,4 +1,15 @@
 """Homework 2: Higher-Order Functions."""
+def square(x):
+    return x * x
+
+def identity(x):
+    return x
+
+def triple(x):
+    return 3 * x
+
+def increment(x):
+    return x + 1
 
 
 def product(n, term):
@@ -20,7 +31,12 @@ def product(n, term):
     >>> product(3, triple)    # 1*3 * 2*3 * 3*3
     162
     """
-    "*** YOUR CODE HERE ***"
+    i=1
+    x=1
+    while i<=n:
+        x*=term(i)
+        i+=1
+    return x
 
 
 from operator import add, mul
@@ -44,8 +60,13 @@ def accumulate(fuse, start, n, term):
     >>> accumulate(lambda x, y: x + y + 1, 2, 3, square)
     19
     """
-    "*** YOUR CODE HERE ***"
-
+    a=start
+    i=1
+    while n>0:
+        a=fuse(a,term(i))
+        i+=1
+        n-=1
+    return a
 
 def summation_using_accumulate(n, term):
     """Returns the sum: term(1) + ... + term(n), using accumulate.
@@ -59,9 +80,9 @@ def summation_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(summation_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    return ____
+    return accumulate(add, 0, n, term)
 
-
+##R
 def product_using_accumulate(n, term):
     """Returns the product: term(1) * ... * term(n), using accumulate.
 
@@ -74,9 +95,9 @@ def product_using_accumulate(n, term):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(product_using_accumulate)).body[0].body]
     ['Expr', 'Return']
     """
-    return ____
+    return accumulate(mul, 1, n, term)
 
-
+##R
 def make_repeater(f, n):
     """Returns the function that computes the nth application of f.
 
@@ -90,7 +111,13 @@ def make_repeater(f, n):
     >>> make_repeater(square, 3)(5) # square(square(square(5)))
     390625
     """
-    "*** YOUR CODE HERE ***"
+    def repeater(x):
+        i=0
+        while i<n:
+            x=f(x)
+            i+=1
+        return x
+    return repeater
 
 
 def composite_identity(f, g):
@@ -109,77 +136,6 @@ def composite_identity(f, g):
     >>> l
     True
     """
-    "*** YOUR CODE HERE ***"
-
-
-def zero(f):
-    return lambda x: x
-
-def successor(n):
-    return lambda f: lambda x: f(n(f)(x))
-
-def one(f):
-    """Church numeral 1: same as successor(zero)"""
-    "*** YOUR CODE HERE ***"
-
-def two(f):
-    """Church numeral 2: same as successor(successor(zero))"""
-    "*** YOUR CODE HERE ***"
-
-three = successor(two)
-
-def church_to_int(n):
-    """Convert the Church numeral n to a Python integer.
-
-    >>> church_to_int(zero)
-    0
-    >>> church_to_int(one)
-    1
-    >>> church_to_int(two)
-    2
-    >>> church_to_int(three)
-    3
-    """
-    "*** YOUR CODE HERE ***"
-
-def add_church(m, n):
-    """Return the Church numeral for m + n, for Church numerals m and n.
-
-    >>> church_to_int(add_church(two, three))
-    5
-    """
-    "*** YOUR CODE HERE ***"
-
-def mul_church(m, n):
-    """Return the Church numeral for m * n, for Church numerals m and n.
-
-    >>> four = successor(three)
-    >>> church_to_int(mul_church(two, three))
-    6
-    >>> church_to_int(mul_church(three, four))
-    12
-    """
-    "*** YOUR CODE HERE ***"
-
-def pow_church(m, n):
-    """Return the Church numeral m ** n, for Church numerals m and n.
-
-    >>> church_to_int(pow_church(two, three))
-    8
-    >>> church_to_int(pow_church(three, two))
-    9
-    """
-    "*** YOUR CODE HERE ***"
-
-
-def square(x):
-    return x * x
-
-def identity(x):
-    return x
-
-def triple(x):
-    return 3 * x
-
-def increment(x):
-    return x + 1
+    def classify(x):
+        return g(f(x))==f(g(x))
+    return classify
